@@ -24,5 +24,5 @@ func (g *githubAPIController) GithubAPI(ctx echo.Context) error {
 		log.Println(err)
 		return ctx.JSON(http.StatusBadRequest, err)
 	}
-	return ctx.JSON()
+	return ctx.JSON(g.usecase.GithubAPI(reqQuery))
 }
