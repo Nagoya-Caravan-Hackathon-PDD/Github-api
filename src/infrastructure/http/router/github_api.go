@@ -4,6 +4,7 @@ import (
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/adapters/controllers"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/adapters/gateways"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/adapters/presenters"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/usecase/interactors"
 )
 
 func (router *router) GithubAPI() {
@@ -13,6 +14,5 @@ func (router *router) GithubAPI() {
 			presenters.NewGithubAPIPresenter(),
 		),
 	)
-
 	router.echo.GET("/github_api", gc.GithubAPI)
 }

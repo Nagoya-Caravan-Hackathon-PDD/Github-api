@@ -13,5 +13,6 @@ func (g *githubAPIPresenter) GithubAPI(err error) (int, output.GithubAPIResponse
 	if err != nil {
 		return 500, output.GithubAPIResponse{}
 	}
+
 	return 200, output.GithubAPIResponse{}
 }

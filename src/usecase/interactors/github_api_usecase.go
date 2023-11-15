@@ -1,6 +1,8 @@
 package interactors
 
 import (
+	"context"
+
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/datastructure/input"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/datastructure/output"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/driver/github_api"
@@ -19,9 +21,30 @@ func NewGithubAPIInteractor(store dai.GithubAPIDai, outputport ports.GithubAPIOu
 
 func (i *GithubAPIInteractor) GetGithubStatus(reqQuery input.GithubAPIRequest) (int, output.GithubAPIResponse) {
 	var err error
-	client := github_api.GithubAuthentication()
-	if reqQuery.GithubID != "" {
-		status, err := i.store.GetGithubStatus()
+	var q struct {
+		User struct {
+			Name                    string
+			Login                   string
+			Url                     string
+			AvatarUrl               string
+			Bio                     string
+			ContributionsCollection struct {
+				ContributionCalendar struct {
+					TotalContributions int
+				}
+			}
+			Followers struct {
+				TotalCount int
+			}
+		} `graphql:"user(login: $githubID)"`
 	}
-
+	if reqQuery.GithubID == "" {
+		return i.outputport.GithubAPI(err)
+	}
+	client := github_api.GithubAuthentication()
+	status, err := i.store.GetGithubStatus()
+	if err != nil {
+		return i.outputport.GithubAPI(err)
+	}
+	err = client.Query(context.Background(), &q, nil)
 }
