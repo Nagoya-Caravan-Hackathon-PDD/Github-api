@@ -3,7 +3,7 @@ package github_api
 import (
 	"context"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/cmd/config"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
 	"github.com/diegosz/go-graphql-client"
 	"golang.org/x/oauth2"
 )

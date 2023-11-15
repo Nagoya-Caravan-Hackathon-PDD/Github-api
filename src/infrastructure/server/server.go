@@ -3,7 +3,7 @@ package server
 import (
 	"database/sql"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/infrastructure/http/router"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/http/router"
 )
 
 // TODO: サーバの起動と停止を行う

@@ -1,6 +1,6 @@
 package ports
 
-import "github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/datastructure/output"
+import "github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/output"
 
 type GithubAPIInput interface {
 	// GetGithubStatus() (string, error)

@@ -1,11 +1,8 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/datastructure/input"
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/usecase/ports"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/input"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/usecase/ports"
 	"github.com/labstack/echo/v4"
 )
 
@@ -17,12 +14,10 @@ func NewGithubAPIController(usecase ports.GithubAPIInput) *githubAPIController {
 	return &githubAPIController{usecase}
 }
 
-func (g *githubAPIController) GithubAPI(ctx echo.Context) error {
+func (gc *githubAPIController) GetGithubStatus(ctx echo.Context) error {
 	var reqQuery input.GithubAPIRequest
-
 	if err := ctx.Bind(&reqQuery); err != nil {
-		log.Println(err)
-		return ctx.JSON(http.StatusBadRequest, err)
+		return echo.ErrBadRequest
 	}
-	return ctx.JSON(g.usecase.GithubAPI(reqQuery))
+	return nil //ctx.JSON(gc.interactor.GithubAPI(reqQuery))
 }

@@ -1,4 +1,4 @@
-module github.com/Nagoya-Caravan-Hackathon-PDD/backend
+module github.com/Nagoya-Caravan-Hackathon-PDD/Github-api
 
 go 1.21.4
 

@@ -5,9 +5,9 @@ import (
 	"flag"
 	"log"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/cmd/config"
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/driver/postgres"
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/infrastructure/server"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/postgres"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/server"
 )
 
 // @title PDD-GitHub-Go-Backend API
