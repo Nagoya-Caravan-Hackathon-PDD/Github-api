@@ -2,7 +2,9 @@ package gateways
 
 import (
 	"context"
+	"log"
 
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/types"
 	"github.com/diegosz/go-graphql-client"
 )
 
@@ -14,31 +16,13 @@ func NewGithubAPIGateway(graph *graphql.Client) *githubAPIGateway {
 	return &githubAPIGateway{graph}
 }
 
-type GitHubStatusQuery struct {
-	User struct {
-		Name                    string
-		Login                   string
-		Url                     string
-		AvatarUrl               string
-		Bio                     string
-		ContributionsCollection struct {
-			ContributionCalendar struct {
-				TotalContributions int
-			}
-		}
-		Followers struct {
-			TotalCount int
-		}
-	} `graphql:"user(login: $githubID)"`
-}
-
-func (g *githubAPIGateway) GetStatus(githubId string) (*GitHubStatusQuery, error) {
-	var query GitHubStatusQuery
+func (g *githubAPIGateway) GetStatus(githubId string) (*types.GitHubStatusQuery, error) {
+	var query types.GitHubStatusQuery
 	if err := g.graph.Query(context.Background(), &query, map[string]interface{}{
-		"githubID": graphql.ID(githubId)}); err != nil {
+		"githubID": graphql.String(githubId)}); err != nil {
 		return nil, err
 	}
-
+	log.Printf("query: %+v", query)
 	return &query, nil
 }
 

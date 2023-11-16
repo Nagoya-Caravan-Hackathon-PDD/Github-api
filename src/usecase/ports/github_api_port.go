@@ -7,5 +7,5 @@ type GithubAPIInput interface {
 }
 
 type GithubAPIOutput interface {
-	GithubAPI(err error) (int, output.GithubAPIResponse)
+	GithubAPI(err error) (int, *output.GithubAPIResponse)
 }

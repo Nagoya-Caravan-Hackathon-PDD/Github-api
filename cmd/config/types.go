@@ -28,6 +28,6 @@ type Cockroach struct {
 }
 
 type Github struct {
-	GithubToken string `env:"GITHUB_API_TOKEN"`
+	GithubToken string `env:"GITHUB_API_TOKEN" envDefault:"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"`
 	Endpoint    string `env:"GITHUB_API_ENDPOINT" envDefault:"https://api.github.com/graphql"`
 }
