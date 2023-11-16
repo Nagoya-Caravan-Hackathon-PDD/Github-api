@@ -89,7 +89,7 @@ func calcLangPercent(status *types.GitHubStatusQuery) map[string]int {
 			totalCount += lang.Size
 		}
 	}
-	for _, lang := range langCount {
+	for lang, _ := range langCount {
 		langPercent[lang] = langSize[lang] / totalCount * 100
 	}
 	return langPercent
