@@ -55,7 +55,7 @@ func NewRouter(db *sql.DB, app *firebase.App) *echo.Echo {
 		AllowHeaders: []string{middleware.AuthorizationHeaderKey},
 	}), slogecho.NewWithConfig(logger, logConfig), echoMiddleware.Recover())
 
-	router.githubAPI()
+	router.GithubAPI()
 
 	return router.echo
 }
