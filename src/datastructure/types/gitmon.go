@@ -1,6 +1,7 @@
 package types
 
 type CreateGitmon struct {
+	Owner   string
 	Name    string
 	Level   int
 	Exp     int

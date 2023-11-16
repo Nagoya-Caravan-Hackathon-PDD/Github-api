@@ -2,19 +2,22 @@ package server
 
 import (
 	"database/sql"
-	// "github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/http/router"
+
+	firebase "firebase.google.com/go"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/http/router"
 )
 
 // TODO: サーバの起動と停止を行う
 type httpServer struct {
-	db *sql.DB
+	db  *sql.DB
+	app *firebase.App
 }
 
-// func NewHTTPserver(db *sql.DB) *httpServer {
-// 	return &httpServer{db}
-// }
+func NewHTTPserver(db *sql.DB, app *firebase.App) *httpServer {
+	return &httpServer{db, app}
+}
 
-// func (s *httpServer) Run() {
-// 	serv := router.NewRouter(s.db)
-// 	runWithGracefulShutdown(serv)
-// }
+func (s *httpServer) Run() {
+	serv := router.NewRouter(s.db, s.app)
+	runWithGracefulShutdown(serv)
+}

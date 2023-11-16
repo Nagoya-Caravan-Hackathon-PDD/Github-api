@@ -6,9 +6,17 @@ import (
 	"log"
 
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
-	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/postgres"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/firebase"
+	psqlDriver "github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/postgres"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/server"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
+
+func init() {
+	firebase.GetGoogleJWKs()
+}
 
 // @title PDD-GitHub-Go-Backend API
 // @version 0.1
@@ -34,8 +42,7 @@ func main() {
 	} else {
 		config.LoadEnv()
 	}
-	log.Println(config.Config)
-	dbconn := postgres.NewConnection()
+	dbconn := psqlDriver.NewConnection()
 	defer dbconn.Close(context.Background())
 
 	db, err := dbconn.Connection()
@@ -43,5 +50,22 @@ func main() {
 		log.Fatalf("failed to connect to database :%v", err)
 	}
 
-	server.NewHTTPserver(db).Run()
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		log.Fatalf("failed to Create Instance:%v", err)
+	}
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://cmd/migration",
+		"postgres", driver)
+	if err != nil {
+		log.Fatalf("failed to Create Instance:%v", err)
+	}
+	m.Up()
+
+	app, err := firebase.FbApp("./sa.json")
+	if err != nil {
+		log.Fatalf("failed to initialize firebase app: %v", err)
+	}
+
+	server.NewHTTPserver(db, app).Run()
 }

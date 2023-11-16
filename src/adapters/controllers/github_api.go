@@ -7,17 +7,17 @@ import (
 )
 
 type githubAPIController struct {
-	usecase ports.GithubAPIInput
+	interactors ports.GithubAPIInput
 }
 
-func NewGithubAPIController(usecase ports.GithubAPIInput) *githubAPIController {
-	return &githubAPIController{usecase}
+func NewGithubAPIController(interactor ports.GithubAPIInput) ports.GithubAPIInput {
+	return &githubAPIController{interactor}
 }
 
-func (gc *githubAPIController) GetGithubStatus(ctx echo.Context) error {
+func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {
 	var reqQuery input.GithubAPIRequest
 	if err := ctx.Bind(&reqQuery); err != nil {
 		return echo.ErrBadRequest
 	}
-	return nil //ctx.JSON(gc.interactor.GithubAPI(reqQuery))
+	return ctx.JSON(gc.interactors.CreateGitmon(reqQuery))
 }

@@ -24,7 +24,7 @@ func NewGithubAPIInteractor(store dai.GithubAPIDai, gitmonStore dai.GitmonDai, o
 	}
 }
 
-func (i *GithubAPIInteractor) GetGithubStatus(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse) {
+func (i *GithubAPIInteractor) CreateGitmon(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse) {
 	var err error
 
 	if reqQuery.GithubID == "" {
@@ -47,6 +47,7 @@ func (i *GithubAPIInteractor) GetGithubStatus(reqQuery input.GithubAPIRequest) (
 	//3. ぎっともんのデータを返す => outputport (presenter)
 	// 															↓ ここにデータ入れる
 	if err := i.gitmonStore.Create(types.CreateGitmon{
+		Owner:   status.User.Login,
 		Name:    status.User.Name,
 		Level:   level,
 		Exp:     exp,

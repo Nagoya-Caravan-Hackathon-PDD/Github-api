@@ -5,6 +5,7 @@ var Config = &config{}
 type config struct {
 	Server    Server
 	Cockroach Cockroach
+	Firebase  Firebase
 	Github    Github
 }
 
@@ -25,6 +26,10 @@ type Cockroach struct {
 	ConnectAttempts int  `env:"PSQL_CONNECT_ATTEMPTS" envDefault:"3"`
 	ConnectBlocks   bool `env:"PSQL_CONNECT_BLOCKS" envDefault:"false"`
 	CloseTimeout    int  `env:"PSQL_CLOSE_TIMEOUT" envDefault:"10"`
+}
+
+type Firebase struct {
+	StorageBucket string `env:"FIREBASE_STORAGE_BUCKET" envDefault:""`
 }
 
 type Github struct {

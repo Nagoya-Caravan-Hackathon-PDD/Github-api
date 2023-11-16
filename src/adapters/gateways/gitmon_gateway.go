@@ -15,5 +15,10 @@ func NewGitmonGateway(db *sql.DB) *GitmonGateway {
 }
 
 func (g *GitmonGateway) Create(arg types.CreateGitmon) error {
-
+	const query = `INSERT INTO gitmon (gitmon_name, exp, base_hp, base_attack, base_defense, base_speed) VALUES ($1, $2, $3, $4, $5, $6)`
+	_, err := g.db.Exec(query, arg.Name, arg.Exp, arg.HP, arg.Attack, arg.Defense, arg.Speed)
+	if err != nil {
+		return err
+	}
+	return nil
 }
