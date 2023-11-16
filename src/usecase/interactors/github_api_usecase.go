@@ -40,12 +40,21 @@ func (i *GithubAPIInteractor) GetGithubStatus(reqQuery input.GithubAPIRequest) (
 	exp := countExp(status)
 	level := calcLevel(exp)
 	langPercent := calcLangPercent(status)
+	baseGitmonStatus := calcBaseGitmonStatus(exp, langPercent)
 
 	//1. status から必要情報抜き出して ぎっともんの基礎ステータスを計算して作る
 	//2. そのデータを基にぎっともんをDBに保存する => dai  (gateways)
 	//3. ぎっともんのデータを返す => outputport (presenter)
 	// 															↓ ここにデータ入れる
-	if err := i.gitmonStore.Create(types.CreateGitmon{}); err != nil {
+	if err := i.gitmonStore.Create(types.CreateGitmon{
+		Name:    status.User.Name,
+		Level:   level,
+		Exp:     exp,
+		HP:      baseGitmonStatus.HP,
+		Attack:  baseGitmonStatus.Attack,
+		Defense: baseGitmonStatus.Defense,
+		Speed:   baseGitmonStatus.Speed,
+	}); err != nil {
 		return i.outputport.GithubAPI(err)
 	}
 
@@ -93,4 +102,125 @@ func calcLangPercent(status *types.GitHubStatusQuery) map[string]int {
 		langPercent[lang] = langSize[lang] / totalCount * 100
 	}
 	return langPercent
+}
+
+func calcBaseGitmonStatus(exp int, langPercent map[string]int) *types.CreateGitmon {
+	// ここでぎっともんのステータスを計算して作る
+	var hp, attack, defense, speed int
+	for lang, percent := range langPercent {
+		switch lang {
+		case "Python":
+			hp += 800 * percent / 100
+			attack += 385 * percent / 100
+			defense += 150 * percent / 100
+			speed += 220 * percent / 100
+		case "C":
+			hp += 1275 * percent / 100
+			attack += 130 * percent / 100
+			defense += 130 * percent / 100
+			speed += 460 * percent / 100
+		case "C++":
+			hp += 1000 * percent / 100
+			attack += 145 * percent / 100
+			defense += 180 * percent / 100
+			speed += 440 * percent / 100
+		case "Java":
+			hp += 674 * percent / 100
+			attack += 205 * percent / 100
+			defense += 230 * percent / 100
+			speed += 360 * percent / 100
+		case "C#":
+			hp += 575 * percent / 100
+			attack += 250 * percent / 100
+			defense += 210 * percent / 100
+			speed += 340 * percent / 100
+		case "VisualBasic":
+			hp += 800 * percent / 100
+			attack += 235 * percent / 100
+			defense += 80 * percent / 100
+			speed += 140 * percent / 100
+		case "JavaScript":
+			hp += 700 * percent / 100
+			attack += 325 * percent / 100
+			defense += 160 * percent / 100
+			speed += 300 * percent / 100
+		case "SQL":
+			hp += 1225 * percent / 100
+			attack += 250 * percent / 100
+			defense += 150 * percent / 100
+			speed += 300 * percent / 100
+		case "ASM":
+			hp += 1900 * percent / 100
+			attack += 115 * percent / 100
+			defense += 70 * percent / 100
+			speed += 480 * percent / 100
+		case "PHP":
+			hp += 700 * percent / 100
+			attack += 340 * percent / 100
+			defense += 120 * percent / 100
+			speed += 260 * percent / 100
+		case "R":
+			hp += 750 * percent / 100
+			attack += 295 * percent / 100
+			defense += 110 * percent / 100
+			speed += 200 * percent / 100
+		case "Go":
+			hp += 350 * percent / 100
+			attack += 280 * percent / 100
+			defense += 200 * percent / 100
+			speed += 400 * percent / 100
+		case "Swift":
+			hp += 225 * percent / 100
+			attack += 175 * percent / 100
+			defense += 220 * percent / 100
+			speed += 380 * percent / 100
+		case "Ruby":
+			hp += 700 * percent / 100
+			attack += 370 * percent / 100
+			defense += 140 * percent / 100
+			speed += 240 * percent / 100
+		case "Perl":
+			hp += 900 * percent / 100
+			attack += 310 * percent / 100
+			defense += 90 * percent / 100
+			speed += 180 * percent / 100
+		case "Rust":
+			hp += 325 * percent / 100
+			attack += 160 * percent / 100
+			defense += 240 * percent / 100
+			speed += 420 * percent / 100
+		case "dart":
+			hp += 300 * percent / 100
+			attack += 190 * percent / 100
+			defense += 100 * percent / 100
+			speed += 160 * percent / 100
+		case "Kotlin":
+			hp += 300 * percent / 100
+			attack += 220 * percent / 100
+			defense += 190 * percent / 100
+			speed += 320 * percent / 100
+		case "TypeScript":
+			hp += 275 * percent / 100
+			attack += 265 * percent / 100
+			defense += 170 * percent / 100
+			speed += 280 * percent / 100
+		case "HTML":
+			hp += 575 * percent / 100
+			attack += 355 * percent / 100
+			defense += 150 * percent / 100
+			speed += 300 * percent / 100
+		default:
+			hp += 725 * percent / 100
+			attack += 250 * percent / 100
+			defense += 150 * percent / 100
+			speed += 300 * percent / 100
+		}
+	}
+	return &types.CreateGitmon{
+		HP:      hp,
+		Attack:  attack,
+		Defense: defense,
+		Speed:   speed,
+	}
+
 }
