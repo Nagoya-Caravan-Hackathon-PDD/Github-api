@@ -42,7 +42,7 @@ func (i *GithubAPIInteractor) GetGithubStatus(reqQuery input.GithubAPIRequest) (
 	langPercent := calcLangPercent(status)
 	baseGitmonStatus := calcBaseGitmonStatus(exp, langPercent)
 
-	//1. status から必要情報抜き出して ぎっともんの基礎ステータスを計算して作る
+	//1. status から必要情報抜き出して ぎっともんの基礎ステータスを計算して作る Done
 	//2. そのデータを基にぎっともんをDBに保存する => dai  (gateways)
 	//3. ぎっともんのデータを返す => outputport (presenter)
 	// 															↓ ここにデータ入れる
