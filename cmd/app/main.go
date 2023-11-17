@@ -19,8 +19,8 @@ func init() {
 	firebase.GetGoogleJWKs()
 }
 
-// @title PDD-GitHub-Go-Backend API
-// @version 0.1
+// @title PDD-GitHub-Go-Backend GithubAPI
+// @version 0.0.1
 // @description This is a PDD-GitHub-Go-Backend API server
 
 // @contact.name murasame29

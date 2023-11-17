@@ -1,10 +1,4 @@
 basePath: /v1
-definitions:
-  output.HealthResponse:
-    properties:
-      message:
-        type: string
-    type: object
 host: localhost:8080
 info:
   contact:
@@ -14,24 +8,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: PDD-GitHub-Go-Backend API
-  version: "0.1"
-paths:
-  /health:
-    get:
-      consumes:
-      - application/json
-      description: health check
-      parameters:
-      - in: query
-        name: checkDB
-        type: boolean
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/output.HealthResponse'
-      summary: health
+  title: PDD-GitHub-Go-Backend GithubAPI
+  version: 0.0.1
+paths: {}
 swagger: "2.0"

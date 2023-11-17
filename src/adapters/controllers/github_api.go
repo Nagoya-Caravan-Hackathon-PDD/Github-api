@@ -8,7 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// @BasePath /v1
+//	Github_api godoc
+//
 // @Summary Create Gitmon
 // @Description Create Gitmon
 // @Accept json
