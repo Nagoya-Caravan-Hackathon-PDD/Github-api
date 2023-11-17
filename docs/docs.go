@@ -86,7 +86,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "PDD-GitHub-Go-Backend GithubAPI",
-	Description:      "This is a PDD-GitHub-Go-Backend API server",
+	Description:      "This is a PDD-GitHub-Go-Backend API server for Gitmon",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
