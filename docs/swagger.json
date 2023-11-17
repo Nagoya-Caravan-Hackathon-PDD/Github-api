@@ -14,6 +14,59 @@
         "version": "0.0.1"
     },
     "host": "localhost:8080",
-    "basePath": "/v1",
-    "paths": {}
+    "paths": {
+        "/v1/gitmon": {
+            "post": {
+                "description": "Create Gitmon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Gitmon",
+                "parameters": [
+                    {
+                        "description": "Github ID",
+                        "name": "GithubAPIRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/input.GithubAPIRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "input.GithubAPIRequest": {
+            "type": "object",
+            "properties": {
+                "github_id": {
+                    "type": "string"
+                },
+                "gitmon_image": {
+                    "type": "integer"
+                },
+                "gitmon_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

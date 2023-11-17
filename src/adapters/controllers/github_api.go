@@ -1,22 +1,11 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/input"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/usecase/ports"
 	"github.com/labstack/echo/v4"
 )
 
-//	Github_api godoc
-//
-// @Summary Create Gitmon
-// @Description Create Gitmon
-// @Accept json
-// @Produce json
-// @Param github_id body string true "Github ID"
-// @Success 200 {object} string
-// @Router /gitmon [post]
 type githubAPIController struct {
 	interactor ports.GithubAPIInput
 }
@@ -25,11 +14,19 @@ func NewGithubAPIController(interactor ports.GithubAPIInput) *githubAPIControlle
 	return &githubAPIController{interactor: interactor}
 }
 
+// Gitmon godoc
+// @Summary		Create Gitmon
+// @Description	Create Gitmon
+// @Accept			json
+// @Produce		json
+// @Param			GithubAPIRequest		body		input.GithubAPIRequest	true	"Github ID"
+// @Success		200				{object}	string
+// @Failure		500				{object}	string
+// @Router			/v1/gitmon [post]
 func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {
 	var reqBody input.GithubAPIRequest
 	if err := ctx.Bind(&reqBody); err != nil {
 		return echo.ErrBadRequest
 	}
-	fmt.Println(reqBody)
 	return ctx.JSON(gc.interactor.CreateGitmon(reqBody))
 }

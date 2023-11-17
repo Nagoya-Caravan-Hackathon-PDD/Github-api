@@ -22,14 +22,68 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/v1/gitmon": {
+            "post": {
+                "description": "Create Gitmon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Gitmon",
+                "parameters": [
+                    {
+                        "description": "Github ID",
+                        "name": "GithubAPIRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/input.GithubAPIRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "input.GithubAPIRequest": {
+            "type": "object",
+            "properties": {
+                "github_id": {
+                    "type": "string"
+                },
+                "gitmon_image": {
+                    "type": "integer"
+                },
+                "gitmon_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "0.0.1",
 	Host:             "localhost:8080",
-	BasePath:         "/v1",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "PDD-GitHub-Go-Backend GithubAPI",
 	Description:      "This is a PDD-GitHub-Go-Backend API server",

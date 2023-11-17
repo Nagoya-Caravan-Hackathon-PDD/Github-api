@@ -1,4 +1,13 @@
-basePath: /v1
+definitions:
+  input.GithubAPIRequest:
+    properties:
+      github_id:
+        type: string
+      gitmon_image:
+        type: integer
+      gitmon_name:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -10,5 +19,29 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: PDD-GitHub-Go-Backend GithubAPI
   version: 0.0.1
-paths: {}
+paths:
+  /v1/gitmon:
+    post:
+      consumes:
+      - application/json
+      description: Create Gitmon
+      parameters:
+      - description: Github ID
+        in: body
+        name: GithubAPIRequest
+        required: true
+        schema:
+          $ref: '#/definitions/input.GithubAPIRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create Gitmon
 swagger: "2.0"

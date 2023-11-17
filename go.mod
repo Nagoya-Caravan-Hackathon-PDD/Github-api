@@ -8,6 +8,7 @@ require (
 	github.com/diegosz/go-graphql-client v0.2.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-migrate/migrate/v4 v4.16.2
+	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.3
 	github.com/lib/pq v1.10.9
@@ -36,7 +37,6 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
 	github.com/googleapis/gax-go/v2 v2.11.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -45,7 +45,7 @@ require (
 	github.com/klauspost/compress v1.15.11 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
-	github.com/mailru/easyjson v0.7.6 // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect

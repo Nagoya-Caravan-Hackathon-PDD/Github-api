@@ -19,18 +19,17 @@ func init() {
 	firebase.GetGoogleJWKs()
 }
 
-// @title PDD-GitHub-Go-Backend GithubAPI
-// @version 0.0.1
-// @description This is a PDD-GitHub-Go-Backend API server
+//	@title			PDD-GitHub-Go-Backend GithubAPI
+//	@version		0.0.1
+//	@description	This is a PDD-GitHub-Go-Backend API server for Gitmon
 
-// @contact.name murasame29
-// @contact.email oogiriminister@gamil.com
+//	@contact.name	murasame29
+//	@contact.email	oogiriminister@gamil.com
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host localhost:8080
-// @BasePath /v1
+// @host		localhost:8080
 func main() {
 	var (
 		usedotEnv = flag.Bool("usedotenv", false, "use .env file")
