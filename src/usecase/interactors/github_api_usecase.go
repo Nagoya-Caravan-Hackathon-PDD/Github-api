@@ -27,7 +27,6 @@ func NewGithubAPIInteractor(store dai.GithubAPIDai, gitmonStore dai.GitmonDai, o
 
 func (i *GithubAPIInteractor) CreateGitmon(reqBody input.GithubAPIRequest) (int, *output.GithubAPIResponse) {
 	var err error
-	fmt.Println(reqBody)
 	if reqBody.GithubID == "" {
 		return i.outputport.GithubAPI(types.CreateGitmon{}, err)
 	}
@@ -36,26 +35,29 @@ func (i *GithubAPIInteractor) CreateGitmon(reqBody input.GithubAPIRequest) (int,
 	if err != nil {
 		return i.outputport.GithubAPI(types.CreateGitmon{}, err)
 	}
-
 	// ここでぎっともんの基礎ステータスを計算して作る
 	exp := countExp(status)
 	level := calcLevel(exp)
 	langPercent := calcLangPercent(status)
 	baseGitmonStatus := calcBaseGitmonStatus(exp, langPercent)
-	fmt.Println(baseGitmonStatus)
+	currentGitmonStatus := calcCurrentGitmonStatus(baseGitmonStatus, level)
 	//1. status から必要情報抜き出して ぎっともんの基礎ステータスを計算して作る Done
 	//2. そのデータを基にぎっともんをDBに保存する => dai  (gateways)
 	//3. ぎっともんのデータを返す => outputport (presenter)
 	// 															↓ ここにデータ入れる
 	arg := types.CreateGitmon{
-		Owner:   status.User.Login,
-		Name:    status.User.Name,
-		Level:   level,
-		Exp:     exp,
-		HP:      baseGitmonStatus.HP,
-		Attack:  baseGitmonStatus.Attack,
-		Defense: baseGitmonStatus.Defense,
-		Speed:   baseGitmonStatus.Speed,
+		Owner:          status.User.Login,
+		Name:           status.User.Name,
+		Level:          level,
+		Exp:            exp,
+		BaseHP:         baseGitmonStatus.BaseHP,
+		BaseAttack:     baseGitmonStatus.BaseAttack,
+		BaseDefense:    baseGitmonStatus.BaseDefense,
+		BaseSpeed:      baseGitmonStatus.BaseSpeed,
+		CurrentHP:      currentGitmonStatus.CurrentHP,
+		CurrentAttack:  currentGitmonStatus.CurrentAttack,
+		CurrentDefense: currentGitmonStatus.CurrentDefense,
+		CurrentSpeed:   baseGitmonStatus.BaseSpeed,
 	}
 	if err := i.gitmonStore.Create(arg); err != nil {
 		return i.outputport.GithubAPI(arg, err)
@@ -101,15 +103,20 @@ func calcLangPercent(status *types.GitHubStatusQuery) map[string]int {
 			totalCount += lang.Size
 		}
 	}
-	for lang, _ := range langCount {
-		langPercent[lang] = langSize[lang] / totalCount * 100
+	fmt.Println(totalCount)
+	for lang := range langCount {
+		langPercent[lang] = int(float64(langSize[lang]) / float64(totalCount) * 100)
 	}
+	fmt.Println(langPercent)
 	return langPercent
 }
 
 func calcBaseGitmonStatus(exp int, langPercent map[string]int) *types.CreateGitmon {
 	// ここでぎっともんのステータスを計算して作る
-	var hp, attack, defense, speed int
+	hp := 0
+	attack := 0
+	defense := 0
+	speed := 0
 	for lang, percent := range langPercent {
 		switch lang {
 		case "Python":
@@ -219,11 +226,32 @@ func calcBaseGitmonStatus(exp int, langPercent map[string]int) *types.CreateGitm
 			speed += 300 * percent / 100
 		}
 	}
+	fmt.Println(hp, attack, defense, speed)
 	return &types.CreateGitmon{
-		HP:      hp,
-		Attack:  attack,
-		Defense: defense,
-		Speed:   speed,
+		BaseHP:      hp,
+		BaseAttack:  attack,
+		BaseDefense: defense,
+		BaseSpeed:   speed,
 	}
+}
 
+func calcCurrentGitmonStatus(status *types.CreateGitmon, level int) *types.CreateGitmon {
+	// ここでぎっともんのステータスを計算して作る
+	hp := status.BaseHP
+	attack := status.BaseAttack
+	defense := status.BaseDefense
+	speed := status.BaseSpeed
+	hp += int(float32(level) * 0.43)
+	attack += int(float32(level) * 0.43)
+	defense += int(float32(level) * 0.43)
+	return &types.CreateGitmon{
+		BaseHP:         status.BaseHP,
+		CurrentHP:      hp,
+		BaseAttack:     status.BaseAttack,
+		CurrentAttack:  attack,
+		BaseDefense:    status.BaseDefense,
+		CurrentDefense: defense,
+		BaseSpeed:      status.BaseSpeed,
+		CurrentSpeed:   speed,
+	}
 }

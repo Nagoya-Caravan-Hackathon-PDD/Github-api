@@ -26,11 +26,10 @@ func TestGetStatus(t *testing.T) {
 			if err != nil {
 				t.Errorf("request error: %v", err)
 			}
-
-			if status != nil {
+			t.Logf("status: %+v", status)
+			if status == nil {
 				t.Errorf("status is nil")
 			}
-
 		})
 	}
 }

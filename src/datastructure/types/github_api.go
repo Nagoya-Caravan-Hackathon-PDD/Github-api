@@ -18,7 +18,7 @@ type GitHubStatusQuery struct {
 							Name  string
 						}
 					}
-				} `graphql:"languages(first: 10, orderBy: {field: SIZE, direction: DESC)"`
+				} `graphql:"languages(first: 10, orderBy: {field: SIZE, direction: DESC})"`
 			}
 		} `graphql:"repositories(first: 100, ownerAffiliations: OWNER, isFork: false)"`
 		ContributionsCollection struct {
