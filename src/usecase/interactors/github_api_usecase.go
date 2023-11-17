@@ -225,7 +225,7 @@ func calcBaseGitmonStatus(exp int, langPercent map[string]int) *types.CreateGitm
 		}
 	}
 	return &types.CreateGitmon{
-		BaseHP:      hp,
+		BaseHP:      hp + 1500,
 		BaseAttack:  attack,
 		BaseDefense: defense,
 		BaseSpeed:   speed,
@@ -238,9 +238,8 @@ func calcCurrentGitmonStatus(status *types.CreateGitmon, level int) *types.Creat
 	attack := status.BaseAttack
 	defense := status.BaseDefense
 	speed := status.BaseSpeed
-	hp += int(float32(level) * 5)
-	attack += int(float32(level) * 2)
-	defense += int(float32(level) * 0.43)
+	hp += int((float64(level) * 0.5 * float64(hp)) / 100)
+	attack += int(float64(level) * float64(status.BaseAttack) / 100)
 	return &types.CreateGitmon{
 		BaseHP:         status.BaseHP,
 		CurrentHP:      hp,
