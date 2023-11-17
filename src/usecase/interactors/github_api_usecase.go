@@ -238,8 +238,8 @@ func calcCurrentGitmonStatus(status *types.CreateGitmon, level int) *types.Creat
 	attack := status.BaseAttack
 	defense := status.BaseDefense
 	speed := status.BaseSpeed
-	hp += int(float32(level) * 0.43)
-	attack += int(float32(level) * 0.43)
+	hp += int(float32(level) * 5)
+	attack += int(float32(level) * 2)
 	defense += int(float32(level) * 0.43)
 	return &types.CreateGitmon{
 		BaseHP:         status.BaseHP,
