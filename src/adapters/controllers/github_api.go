@@ -7,11 +7,11 @@ import (
 )
 
 type githubAPIController struct {
-	interactors ports.GithubAPIInput
+	interactor ports.GithubAPIInput
 }
 
-func NewGithubAPIController(interactor ports.GithubAPIInput) ports.GithubAPIInput {
-	return &githubAPIController{interactor}
+func NewGithubAPIController(interactor ports.GithubAPIInput) *githubAPIController {
+	return &githubAPIController{interactor: interactor}
 }
 
 func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {
@@ -19,5 +19,5 @@ func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {
 	if err := ctx.Bind(&reqQuery); err != nil {
 		return echo.ErrBadRequest
 	}
-	return ctx.JSON(gc.interactors.CreateGitmon(reqQuery))
+	return ctx.JSON(gc.interactor.CreateGitmon(reqQuery))
 }

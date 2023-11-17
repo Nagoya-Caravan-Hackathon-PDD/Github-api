@@ -8,11 +8,12 @@ import (
 )
 
 func (router *router) GithubAPI() {
+	g := router.echo.Group("/v1")
 	gc := controllers.NewGithubAPIController(
 		interactors.NewGithubAPIInteractor(
 			gateways.NewGithubAPIGateway(router.graphqlClient),
 			presenters.NewGithubAPIPresenter(),
 		),
 	)
-	router.echo.POST("/github_api", gc.GetGithubStatus)
+	router.echo.POST("/gitmon", gc.GetGithubStatus)
 }
