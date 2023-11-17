@@ -4,4 +4,5 @@ import "github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/typ
 
 type GithubAPIDai interface {
 	GetStatus(githubId string) (*types.GitHubStatusQuery, error)
+	GetGithubStatus(query interface{}) error
 }

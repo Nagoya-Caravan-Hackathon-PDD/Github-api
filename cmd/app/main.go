@@ -7,6 +7,7 @@ import (
 
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/firebase"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/github_api"
 	psqlDriver "github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/driver/postgres"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/server"
 	"github.com/golang-migrate/migrate/v4"
@@ -62,10 +63,5 @@ func main() {
 	}
 	m.Up()
 
-	app, err := firebase.FbApp("./sa.json")
-	if err != nil {
-		log.Fatalf("failed to initialize firebase app: %v", err)
-	}
-
-	server.NewHTTPserver(db, app).Run()
+	server.NewHTTPserver(db, github_api.GithubAuthentication()).Run()
 }

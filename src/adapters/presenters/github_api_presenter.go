@@ -9,10 +9,10 @@ func NewGithubAPIPresenter() *githubAPIPresenter {
 	return &githubAPIPresenter{}
 }
 
-func (g *githubAPIPresenter) GithubAPI(err error) (int, output.GithubAPIResponse) {
+func (g *githubAPIPresenter) GithubAPI(err error) (int, *output.GithubAPIResponse) {
 	if err != nil {
-		return 500, output.GithubAPIResponse{}
+		return 500, nil
 	}
-
-	return 200, output.GithubAPIResponse{}
+	// レスポンス追加
+	return 200, &output.GithubAPIResponse{}
 }

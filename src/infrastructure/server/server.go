@@ -3,21 +3,20 @@ package server
 import (
 	"database/sql"
 
-	firebase "firebase.google.com/go"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/http/router"
+	"github.com/diegosz/go-graphql-client"
 )
 
-// TODO: サーバの起動と停止を行う
 type httpServer struct {
-	db  *sql.DB
-	app *firebase.App
+	db            *sql.DB
+	graphqlClient *graphql.Client
 }
 
-func NewHTTPserver(db *sql.DB, app *firebase.App) *httpServer {
-	return &httpServer{db, app}
+func NewHTTPserver(db *sql.DB, graphqlClient *graphql.Client) *httpServer {
+	return &httpServer{db, graphqlClient}
 }
 
 func (s *httpServer) Run() {
-	serv := router.NewRouter(s.db, s.app)
+	serv := router.NewRouter(s.db, s.graphqlClient)
 	runWithGracefulShutdown(serv)
 }

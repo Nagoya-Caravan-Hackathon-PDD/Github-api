@@ -7,10 +7,10 @@ import (
 
 type GithubAPIInput interface {
 	CreateGitmon(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse)
-	GetGithubStatus() (string, error)
+	//	GetGithubStatus() (string, error)
 }
 
 type GithubAPIOutput interface {
-	CreateGitmon(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse)
+	//CreateGitmon(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse)
 	GithubAPI(err error) (int, *output.GithubAPIResponse)
 }
