@@ -8,6 +8,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @BasePath /v1
+// @Summary Create Gitmon
+// @Description Create Gitmon
+// @Accept json
+// @Produce json
+// @Param github_id body string true "Github ID"
+// @Success 200 {object} string
+// @Router /gitmon [post]
 type githubAPIController struct {
 	interactor ports.GithubAPIInput
 }

@@ -1,7 +1,6 @@
 package interactors
 
 import (
-	"fmt"
 	"math"
 
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/input"
@@ -104,11 +103,9 @@ func calcLangPercent(status *types.GitHubStatusQuery) map[string]int {
 			totalCount += lang.Size
 		}
 	}
-	fmt.Println(totalCount)
 	for lang := range langCount {
 		langPercent[lang] = int(float64(langSize[lang]) / float64(totalCount) * 100)
 	}
-	fmt.Println(langPercent)
 	return langPercent
 }
 
@@ -227,7 +224,6 @@ func calcBaseGitmonStatus(exp int, langPercent map[string]int) *types.CreateGitm
 			speed += 300 * percent / 100
 		}
 	}
-	fmt.Println(hp, attack, defense, speed)
 	return &types.CreateGitmon{
 		BaseHP:      hp,
 		BaseAttack:  attack,
