@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/input"
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/usecase/ports"
 	"github.com/labstack/echo/v4"
@@ -15,9 +17,10 @@ func NewGithubAPIController(interactor ports.GithubAPIInput) *githubAPIControlle
 }
 
 func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {
-	var reqQuery input.GithubAPIRequest
-	if err := ctx.Bind(&reqQuery); err != nil {
+	var reqBody input.GithubAPIRequest
+	if err := ctx.Bind(&reqBody); err != nil {
 		return echo.ErrBadRequest
 	}
-	return ctx.JSON(gc.interactor.CreateGitmon(reqQuery))
+	fmt.Println(reqBody)
+	return ctx.JSON(gc.interactor.CreateGitmon(reqBody))
 }

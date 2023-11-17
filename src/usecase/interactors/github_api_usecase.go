@@ -1,6 +1,7 @@
 package interactors
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/datastructure/input"
@@ -24,16 +25,16 @@ func NewGithubAPIInteractor(store dai.GithubAPIDai, gitmonStore dai.GitmonDai, o
 	}
 }
 
-func (i *GithubAPIInteractor) CreateGitmon(reqQuery input.GithubAPIRequest) (int, *output.GithubAPIResponse) {
+func (i *GithubAPIInteractor) CreateGitmon(reqBody input.GithubAPIRequest) (int, *output.GithubAPIResponse) {
 	var err error
-
-	if reqQuery.GithubID == "" {
-		return i.outputport.GithubAPI(err)
+	fmt.Println(reqBody)
+	if reqBody.GithubID == "" {
+		return i.outputport.GithubAPI(types.CreateGitmon{}, err)
 	}
 
-	status, err := i.store.GetStatus(reqQuery.GithubID)
+	status, err := i.store.GetStatus(reqBody.GithubID)
 	if err != nil {
-		return i.outputport.GithubAPI(err)
+		return i.outputport.GithubAPI(types.CreateGitmon{}, err)
 	}
 
 	// ここでぎっともんの基礎ステータスを計算して作る
@@ -41,12 +42,12 @@ func (i *GithubAPIInteractor) CreateGitmon(reqQuery input.GithubAPIRequest) (int
 	level := calcLevel(exp)
 	langPercent := calcLangPercent(status)
 	baseGitmonStatus := calcBaseGitmonStatus(exp, langPercent)
-
+	fmt.Println(baseGitmonStatus)
 	//1. status から必要情報抜き出して ぎっともんの基礎ステータスを計算して作る Done
 	//2. そのデータを基にぎっともんをDBに保存する => dai  (gateways)
 	//3. ぎっともんのデータを返す => outputport (presenter)
 	// 															↓ ここにデータ入れる
-	if err := i.gitmonStore.Create(types.CreateGitmon{
+	arg := types.CreateGitmon{
 		Owner:   status.User.Login,
 		Name:    status.User.Name,
 		Level:   level,
@@ -55,11 +56,12 @@ func (i *GithubAPIInteractor) CreateGitmon(reqQuery input.GithubAPIRequest) (int
 		Attack:  baseGitmonStatus.Attack,
 		Defense: baseGitmonStatus.Defense,
 		Speed:   baseGitmonStatus.Speed,
-	}); err != nil {
-		return i.outputport.GithubAPI(err)
+	}
+	if err := i.gitmonStore.Create(arg); err != nil {
+		return i.outputport.GithubAPI(arg, err)
 	}
 
-	return i.outputport.GithubAPI(nil)
+	return i.outputport.GithubAPI(arg, nil)
 }
 
 func countExp(status *types.GitHubStatusQuery) int {
