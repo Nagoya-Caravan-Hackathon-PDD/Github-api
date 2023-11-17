@@ -2,6 +2,7 @@ CREATE TABLE "gitmons" (
   "gitmon_id" varchar PRIMARY KEY,
   "owner_id" varchar NOT NULL,
   "gitmon_name" varchar NOT NULL,
+  "gitmon_image" int NOT NULL,
   "exp" int NOT NULL,
   "base_hp" int NOT NULL,
   "current_hp" int NOT NULL,
