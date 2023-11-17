@@ -47,7 +47,8 @@ func (i *GithubAPIInteractor) CreateGitmon(reqBody input.GithubAPIRequest) (int,
 	// 															↓ ここにデータ入れる
 	arg := types.CreateGitmon{
 		Owner:          status.User.Login,
-		Name:           status.User.Name,
+		Name:           reqBody.GitmonName,
+		Image:          reqBody.GitmonImage,
 		Level:          level,
 		Exp:            exp,
 		BaseHP:         baseGitmonStatus.BaseHP,
