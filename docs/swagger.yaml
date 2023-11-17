@@ -8,6 +8,13 @@ definitions:
       gitmon_name:
         type: string
     type: object
+  output.GithubAPIResponse:
+    properties:
+      name:
+        type: string
+      owner:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -38,7 +45,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: string
+            $ref: '#/definitions/output.GithubAPIResponse'
         "500":
           description: Internal Server Error
           schema:

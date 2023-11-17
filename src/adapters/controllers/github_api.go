@@ -20,7 +20,7 @@ func NewGithubAPIController(interactor ports.GithubAPIInput) *githubAPIControlle
 // @Accept			json
 // @Produce		json
 // @Param			GithubAPIRequest		body		input.GithubAPIRequest	true	"Github ID"
-// @Success		200				{object}	string
+// @Success		200				{object}	output.GithubAPIResponse
 // @Failure		500				{object}	string
 // @Router			/v1/gitmon [post]
 func (gc *githubAPIController) CreateGitmon(ctx echo.Context) error {

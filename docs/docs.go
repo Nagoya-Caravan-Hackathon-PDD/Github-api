@@ -48,7 +48,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/output.GithubAPIResponse"
                         }
                     },
                     "500": {
@@ -72,6 +72,17 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "gitmon_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.GithubAPIResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "owner": {
                     "type": "string"
                 }
             }
