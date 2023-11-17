@@ -1,8 +1,18 @@
-basePath: /v1
 definitions:
-  output.HealthResponse:
+  input.GithubAPIRequest:
     properties:
-      message:
+      github_id:
+        type: string
+      gitmon_image:
+        type: integer
+      gitmon_name:
+        type: string
+    type: object
+  output.GithubAPIResponse:
+    properties:
+      name:
+        type: string
+      owner:
         type: string
     type: object
 host: localhost:8080
@@ -10,28 +20,35 @@ info:
   contact:
     email: oogiriminister@gamil.com
     name: murasame29
-  description: This is a PDD-GitHub-Go-Backend API server
+  description: This is a PDD-GitHub-Go-Backend API server for Gitmon
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: PDD-GitHub-Go-Backend API
-  version: "0.1"
+  title: PDD-GitHub-Go-Backend GithubAPI
+  version: 0.0.1
 paths:
-  /health:
-    get:
+  /v1/gitmon:
+    post:
       consumes:
       - application/json
-      description: health check
+      description: Create Gitmon
       parameters:
-      - in: query
-        name: checkDB
-        type: boolean
+      - description: Github ID
+        in: body
+        name: GithubAPIRequest
+        required: true
+        schema:
+          $ref: '#/definitions/input.GithubAPIRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.HealthResponse'
-      summary: health
+            $ref: '#/definitions/output.GithubAPIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create Gitmon
 swagger: "2.0"

@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/cmd/config"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
 	"github.com/labstack/echo/v4"
 )
 

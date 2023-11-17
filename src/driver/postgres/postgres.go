@@ -7,8 +7,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/cmd/config"
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/pkg/utils"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/pkg/utils"
 	_ "github.com/lib/pq"
 )
 

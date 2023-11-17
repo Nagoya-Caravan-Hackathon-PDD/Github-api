@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/cmd/config"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/cmd/config"
 )
 
 func TestMain(m *testing.M) {

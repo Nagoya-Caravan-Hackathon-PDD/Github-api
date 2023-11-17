@@ -3,19 +3,20 @@ package server
 import (
 	"database/sql"
 
-	"github.com/Nagoya-Caravan-Hackathon-PDD/backend/src/infrastructure/http/router"
+	"github.com/Nagoya-Caravan-Hackathon-PDD/Github-api/src/infrastructure/http/router"
+	"github.com/diegosz/go-graphql-client"
 )
 
-// TODO: サーバの起動と停止を行う
 type httpServer struct {
-	db *sql.DB
+	db            *sql.DB
+	graphqlClient *graphql.Client
 }
 
-func NewHTTPserver(db *sql.DB) *httpServer {
-	return &httpServer{db}
+func NewHTTPserver(db *sql.DB, graphqlClient *graphql.Client) *httpServer {
+	return &httpServer{db, graphqlClient}
 }
 
 func (s *httpServer) Run() {
-	serv := router.NewRouter(s.db)
+	serv := router.NewRouter(s.db, s.graphqlClient)
 	runWithGracefulShutdown(serv)
 }
