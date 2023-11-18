@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine3.17 AS builder
+FROM golang:1.21.4-alpine3.17 AS builder
 WORKDIR /app
 COPY . .
 RUN go build -o main ./cmd/app/main.go
@@ -7,7 +7,7 @@ FROM alpine:3.17
 WORKDIR /app
 COPY --from=builder /app/main .
 
-ENV SERVER_ADDR="localhost:8080" 
+ENV SERVER_ADDR="localhost:8082" 
 ENV PSQL_HOST="localhost"
 ENV PSQL_PORT="5432"
 ENV PSQL_USER="postgres"
@@ -20,5 +20,8 @@ ENV PSQL_CONNECT_ATTEMPTS=3
 ENV PSQL_CONNECT_BLOCKS=false
 ENV PSQL_CLOSE_TIMEOUT=10
 
-EXPOSE 8080
+ENV GITHUB_API_TOKEN=""
+ENV GITHUB_API_ENDPOINT="https://api.github.com/graphql"
+
+EXPOSE 8082
 CMD [ "/app/main"]
