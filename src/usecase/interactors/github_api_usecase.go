@@ -69,7 +69,12 @@ func (i *GithubAPIInteractor) CreateGitmon(reqBody input.GithubAPIRequest) (int,
 func countExp(status *types.GitHubStatusQuery) int {
 	contributions := status.User.ContributionsCollection.ContributionCalendar.TotalContributions
 	followers := status.User.Followers.TotalCount
-	exp := contributions*5 + followers*10
+	var stars int
+	for _, repo := range status.User.Repositories.Nodes {
+		stars += repo.Stargazers.TotalCount
+	}
+
+	exp := contributions*5 + stars*7 + followers*10
 	return exp
 }
 func calcLevel(exp int) int {
