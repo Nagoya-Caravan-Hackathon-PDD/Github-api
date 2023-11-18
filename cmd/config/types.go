@@ -10,7 +10,7 @@ type config struct {
 }
 
 type Server struct {
-	Port string `env:"SERVER_ADDR" envDefault:"localhost:8080"`
+	Port string `env:"SERVER_ADDR" envDefault:"localhost:8082"`
 }
 
 type Cockroach struct {
