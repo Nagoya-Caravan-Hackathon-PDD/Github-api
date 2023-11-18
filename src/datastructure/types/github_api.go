@@ -9,7 +9,10 @@ type GitHubStatusQuery struct {
 		Bio          string
 		Repositories struct {
 			Nodes []struct {
-				Name      string
+				Name       string
+				Stargazers struct {
+					TotalCount int
+				}
 				Languages struct {
 					Edges []struct {
 						Size int
