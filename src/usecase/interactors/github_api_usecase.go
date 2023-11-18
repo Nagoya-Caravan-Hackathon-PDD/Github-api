@@ -73,7 +73,6 @@ func countExp(status *types.GitHubStatusQuery) int {
 	for _, repo := range status.User.Repositories.Nodes {
 		stars += repo.Stargazers.TotalCount
 	}
-
 	exp := contributions*5 + stars*7 + followers*10
 	return exp
 }
